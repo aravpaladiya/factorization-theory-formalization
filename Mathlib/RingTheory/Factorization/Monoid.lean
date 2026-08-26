@@ -15,7 +15,7 @@ import Mathlib.Order.Lattice.Nat
 # Atomic, bounded, finite, and half-factorial monoids
 
 This file defines atomic, bounded factorization, finite factorization, and half-factorial monoids,
-and relates them to Mathlib's existing `WfDvdMonoid` class.
+and relates them to mathlib's existing `WfDvdMonoid` class.
 
 ## Main definitions
 
@@ -72,6 +72,7 @@ theorem AtomicMonoid.of_exists_factors
     obtain ⟨f, hf, hprod⟩ := h a ha
     exact ⟨Associates.Factorization.ofMultiset f hf, ofMultiset_mem_factorizations hf hprod⟩⟩
 
+/-- A nonzero element of an atomic monoid has at least one factorization length. -/
 theorem nonempty_factorizationLengths [AtomicMonoid α] (ha : a ≠ 0) :
     (factorizationLengths a).Nonempty := by
   rw [factorizationLengths_def]
@@ -99,6 +100,7 @@ have the same length. -/
   subsingleton_factorizationLengths :
     ∀ ⦃a : α⦄, a ≠ 0 → (factorizationLengths a).Subsingleton
 
+/-- The factorization lengths of a nonzero element of a half-factorial monoid form a singleton. -/
 theorem HalfFactorialMonoid.exists_factorizationLengths_eq_singleton [HalfFactorialMonoid α]
     (ha : a ≠ 0) : ∃ n, factorizationLengths a = {n} := by
   obtain ⟨n, hn⟩ := nonempty_factorizationLengths ha

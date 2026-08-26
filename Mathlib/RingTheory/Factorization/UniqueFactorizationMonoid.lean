@@ -45,7 +45,8 @@ instance (priority := 100) [UniqueFactorizationMonoid α] : FiniteFactorizationM
 -- see Note [lower instance priority]
 instance (priority := 100) [UniqueFactorizationMonoid α] : HalfFactorialMonoid α where
   subsingleton_factorizationLengths _ ha := by
-    simp [factorizationLengths_def, UniqueFactorizationMonoid.factorizations_eq_singleton ha]
+    rw [UniqueFactorizationMonoid.factorizationLengths_eq_singleton ha]
+    exact Set.subsingleton_singleton
 
 /-- A cancellative monoid with zero is a unique factorization monoid if and only if it is atomic
 and every nonzero element has at most one factorization. -/

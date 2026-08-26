@@ -55,7 +55,7 @@ variable [CommMonoid α]
 
 private theorem irreducible_mk_iff {a : α} :
     Irreducible (Associates.mk a) ↔ Irreducible a := by
-  simp only [irreducible_iff, isUnit_mk, forall_associated, isUnit_mk, mk_mul_mk,
+  simp only [irreducible_iff, isUnit_mk, forall_associated, mk_mul_mk,
     mk_eq_mk_iff_associated, Associated.comm (x := a)]
   apply Iff.rfl.and
   constructor
@@ -192,8 +192,8 @@ theorem exists_multiset_of_mem_factorizations {f : Associates.Factorization α}
   refine ⟨g, hg, ?_, ?_⟩
   · apply Associates.mk_eq_mk_iff_associated.mp
     exact Associates.prod_mk.symm.trans <| by
-      rw [hmap]
-      exact hf
+      rw [hmap, ← Associates.Factorization.prod_def]
+      exact mem_factorizations.mp hf
   · rw [← Multiset.map_eq_map Subtype.coe_injective,
       Associates.Factorization.map_coe_ofMultiset, hmap]
 
@@ -226,7 +226,7 @@ theorem factorizations_of_irreducible (ha : Irreducible a) :
   let p : {p : Associates α // Irreducible p} := ⟨Associates.mk a, hmk⟩
   have h : factorizations a = {{p}} := by
     refine Set.eq_singleton_iff_unique_mem.mpr ⟨by simp [p], fun f hprod ↦ ?_⟩
-    change f.prod = Associates.mk a at hprod
+    rw [mem_factorizations] at hprod
     obtain ⟨x, hx⟩ := Multiset.exists_mem_of_ne_zero fun hf : f = 0 ↦
       hmk.ne_one (hprod.symm.trans <| by rw [hf, Associates.Factorization.prod_zero])
     obtain ⟨s, rfl⟩ := Multiset.exists_cons_of_mem hx
