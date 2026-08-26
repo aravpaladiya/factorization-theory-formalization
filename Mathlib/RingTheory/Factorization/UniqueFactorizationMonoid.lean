@@ -8,6 +8,8 @@ module
 public import Mathlib.RingTheory.Factorization.Monoid
 public import Mathlib.RingTheory.Factorization.Unique
 
+import Mathlib.RingTheory.UniqueFactorizationDomain.Basic
+
 /-!
 # Unique factorization and the factorization hierarchy
 

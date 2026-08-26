@@ -5,8 +5,11 @@ Authors: Arav Paladiya
 -/
 module
 
-public import Mathlib.Algebra.BigOperators.Associated
+public import Mathlib.Algebra.BigOperators.Group.Multiset.Basic
 public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Algebra.GroupWithZero.Associated
+
+import Mathlib.Algebra.BigOperators.Associated
 
 /-!
 # Factorizations into irreducibles

@@ -6,7 +6,9 @@ Authors: Arav Paladiya
 module
 
 public import Mathlib.RingTheory.Factorization.Basic
-public import Mathlib.RingTheory.UniqueFactorizationDomain.Basic
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Defs
+
+import Mathlib.RingTheory.UniqueFactorizationDomain.Basic
 
 /-!
 # Formal factorizations in unique factorization monoids

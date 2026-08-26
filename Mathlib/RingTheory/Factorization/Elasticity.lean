@@ -8,7 +8,8 @@ module
 public import Mathlib.Data.ENNReal.Inv
 public import Mathlib.Data.Real.ENatENNReal
 public import Mathlib.RingTheory.Factorization.Lengths
-public import Mathlib.RingTheory.Factorization.UniqueFactorizationMonoid
+
+import Mathlib.RingTheory.Factorization.UniqueFactorizationMonoid
 
 /-!
 # Elasticity of factorizations
