@@ -29,6 +29,8 @@ lengths of its minimal zero-sum sequences. It is `⊤` when these lengths are un
   trivial.
 * `AddMonoid.davenportConstant_le_natCard`: `D(G) ≤ |G|` for finite cancellative additive
   commutative monoids.
+* `AddMonoid.davenportConstant_le_enatCard`: `D(G)` is at most the extended cardinality of a
+  cancellative additive commutative monoid.
 * `AddMonoid.davenportConstant_le_iff_forall_exists_isZeroSum`: the Davenport constant as the
   least zero-sum threshold.
 
@@ -223,6 +225,14 @@ theorem davenportConstant_le_natCard [Finite G] : davenportConstant G ≤ Nat.ca
         · exact hcollision i j hij heq
         · exact hcollision j i hji heq.symm
       simpa [f] using Nat.card_le_card_of_injective f hf
+
+/-- The Davenport constant of a cancellative additive commutative monoid is at most its extended
+cardinality. -/
+theorem davenportConstant_le_enatCard : davenportConstant G ≤ ENat.card G := by
+  cases finite_or_infinite G
+  · let _ := Fintype.ofFinite G
+    simpa [Nat.card_eq_fintype_card] using davenportConstant_le_natCard (G := G)
+  · simp
 
 /-- The Davenport constant of a finite cancellative additive commutative monoid is finite. -/
 theorem davenportConstant_lt_top [Finite G] : davenportConstant G < ⊤ := by
