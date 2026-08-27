@@ -35,6 +35,7 @@ common divisor of finitely many elements of the image.
 * `IsDivisorTheory.exists_dvd`: the image is cofinal for divisibility.
 * `IsDivisorTheory.exists_isGCD_of_ne_zero`: every nonzero divisor is a greatest common divisor
   of finitely many image elements.
+* `DivisorTheory.divisorMultiset`: the multiset underlying the divisor of an element.
 
 ## References
 
@@ -381,6 +382,55 @@ theorem ext {D₁ D₂ : DivisorTheory α P} (h : ∀ a, D₁ a = D₂ a) : D₁
 theorem isDivisorHom : IsDivisorHom D :=
   isDivisorHom_iff.mpr fun ⦃_ _⦄ h ↦
     D.isDivisorTheory.isDivisorHom.dvd_of_map_dvd h
+
+/-- The multiset underlying the divisor of `a`. This is total, with the empty multiset used
+at `a = 0`. -/
+def divisorMultiset (a : α) : Multiset P :=
+  WithZero.log (D a)
+
+/-- The divisor multiset of zero is empty. -/
+@[simp]
+theorem divisorMultiset_zero : D.divisorMultiset 0 = 0 := by
+  rw [divisorMultiset, map_zero, WithZero.log_zero]
+
+/-- The divisor multiset of one is empty. -/
+@[simp]
+theorem divisorMultiset_one : D.divisorMultiset 1 = 0 := by
+  rw [divisorMultiset, map_one, WithZero.log_one]
+
+/-- Re-embedding the divisor multiset of a nonzero element recovers its divisor. -/
+@[simp]
+theorem coe_divisorMultiset (a : α) (ha : a ≠ 0) :
+    ((Multiplicative.ofAdd (D.divisorMultiset a) : FreeDivisorMonoid P) :
+        DivisorMonoid P) = D a := by
+  change WithZero.exp (WithZero.log (D a)) = D a
+  exact WithZero.exp_log (D.isDivisorHom.map_ne_zero ha)
+
+/-- The divisor multiset is additive on products of nonzero elements. -/
+@[simp]
+theorem divisorMultiset_mul {a b : α} (ha : a ≠ 0) (hb : b ≠ 0) :
+    D.divisorMultiset (a * b) = D.divisorMultiset a + D.divisorMultiset b := by
+  rw [divisorMultiset, map_mul]
+  exact WithZero.log_mul (D.isDivisorHom.map_ne_zero ha)
+    (D.isDivisorHom.map_ne_zero hb)
+
+/-- A divisor of a nonzero element has a submultiset of its divisor multiset. -/
+theorem divisorMultiset_le_of_dvd {a b : α} (hb : b ≠ 0) (hab : a ∣ b) :
+    D.divisorMultiset a ≤ D.divisorMultiset b := by
+  have ha := ne_zero_of_dvd_ne_zero hb hab
+  have hmap : D a ∣ D b := map_dvd D hab
+  obtain ⟨x, hx⟩ := hmap
+  have hx0 : x ≠ 0 := by
+    intro hx0
+    subst x
+    apply hb
+    apply D.isDivisorHom.map_eq_zero_iff.mp
+    simpa only [mul_zero] using hx
+  obtain ⟨c, rfl⟩ := WithZero.ne_zero_iff_exists.mp hx0
+  rw [← D.coe_divisorMultiset a ha, ← D.coe_divisorMultiset b hb] at hx
+  have hx' := WithZero.coe_inj.mp hx
+  change D.divisorMultiset b = D.divisorMultiset a + c.toAdd at hx'
+  exact Multiset.le_iff_exists_add.mpr ⟨c.toAdd, hx'⟩
 
 end DivisorTheory
 
