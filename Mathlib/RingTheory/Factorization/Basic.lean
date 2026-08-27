@@ -100,6 +100,12 @@ theorem prod_cons (p : {p : Associates α // Irreducible p})
 theorem prod_add (f g : Associates.Factorization α) : prod (f + g) = prod f * prod g := by
   simp [prod]
 
+/-- Every factor in a formal factorization divides its product. -/
+theorem dvd_prod {p : {p : Associates α // Irreducible p}}
+    {f : Associates.Factorization α} (hp : p ∈ f) : (p : Associates α) ∣ f.prod := by
+  rw [prod_def]
+  exact Multiset.dvd_prod (Multiset.mem_map_of_mem _ hp)
+
 @[simp]
 theorem prod_eq_one_iff {f : Associates.Factorization α} : prod f = 1 ↔ f = 0 := by
   constructor
