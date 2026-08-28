@@ -1,0 +1,19 @@
+# Lean and Lake
+/.lake/
+/lake-packages/
+/.cache/
+*.olean
+*.ilean
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# macOS and editors
+.DS_Store
+**/.DS_Store
+.idea/
+.vscode/
+*.swp
+*~

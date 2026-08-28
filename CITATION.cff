@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+title: "Factorization Theory Formalization"
+type: software
+authors:
+  - family-names: Paladiya
+    given-names: Arav
+abstract: "A Lean formalization of non-unique factorization theory built on top of mathlib."
+repository-code: "https://github.com/aravpaladiya/factorization-theory-formalization"
+url: "https://github.com/aravpaladiya/factorization-theory-formalization"
+license: Apache-2.0
+keywords:
+  - Lean
+  - Lean 4
+  - mathlib
+  - factorization theory
+  - commutative algebra
+  - additive combinatorics
